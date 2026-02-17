@@ -135,50 +135,6 @@
     }
     .btn-secondary:hover { background: var(--crimson); color: white; }
 
-    /* ── LAUNCH BUTTON ── */
-    .btn-launch {
-      position: relative;
-      background: linear-gradient(135deg, var(--crimson), var(--warm-red));
-      color: white !important;
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(192,57,43,0.4), inset 0 -3px 0 rgba(0,0,0,0.2);
-      border: 2px solid transparent;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      animation: launchPulse 2.5s ease-in-out infinite;
-    }
-    .btn-launch:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 35px rgba(192,57,43,0.6), inset 0 -3px 0 rgba(0,0,0,0.2);
-    }
-    .btn-launch:active {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 15px rgba(192,57,43,0.4), inset 0 -1px 0 rgba(0,0,0,0.2);
-    }
-    @keyframes launchPulse {
-      0%, 100% { box-shadow: 0 8px 25px rgba(192,57,43,0.4), inset 0 -3px 0 rgba(0,0,0,0.2); }
-      50% { box-shadow: 0 8px 35px rgba(192,57,43,0.6), inset 0 -3px 0 rgba(0,0,0,0.2); }
-    }
-    .btn-launch::before {
-      content: '🚀';
-      font-size: 1.3rem;
-      animation: launchRocket 1s ease-in-out infinite;
-    }
-    @keyframes launchRocket {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-
     .hero-image {
       position: relative; z-index: 2;
       display: flex; justify-content: center; align-items: center;
@@ -698,7 +654,6 @@
       <h1>Your Journey to<br /><em>Healing &amp; Hope</em><br />Starts Here</h1>
       <p class="hero-sub">Compassionate, professional counselling for individuals, families, students, and children. Specializing in addiction recovery, life stabilization, and emotional wellbeing — in a safe, judgment-free space.</p>
       <div class="hero-btns">
-        <button class="btn-launch" onclick="launchSite(); return false;"> Launch Site</button>
         <a href="#" class="btn-primary" onclick="openBookingModal(); return false;">Book a Free Consultation</a>
         <a href="#services" class="btn-secondary">Explore Services</a>
       </div>
@@ -1347,51 +1302,6 @@
       addiction: { name: 'Addiction Recovery', duration: 60, apiType: 'addiction-session' },
       coaching: { name: 'Life Stabilization & Coaching', duration: 50, apiType: 'coaching-session' }
     };
-
-    // ─────────────────────────────────────
-    // LAUNCH SITE - Activate Booking System
-    // ─────────────────────────────────────
-    function launchSite() {
-      const launchBtn = event.target;
-      
-      // Add launch animation
-      launchBtn.style.animation = 'none';
-      setTimeout(() => {
-        launchBtn.style.animation = '';
-      }, 50);
-
-      // Show success feedback
-      const originalText = launchBtn.textContent;
-      launchBtn.textContent = '🚀 LAUNCHING...';
-      launchBtn.style.opacity = '0.8';
-      
-      // Activate the site (scroll to services and show booking)
-      setTimeout(() => {
-        // Scroll to services with a smooth animation
-        const servicesSection = document.getElementById('services');
-        if (servicesSection) {
-          servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        // Click the WhatsApp button to show presence
-        const whatsappBtn = document.querySelector('.whatsapp');
-        if (whatsappBtn) {
-          whatsappBtn.style.transform = 'scale(1.1)';
-          setTimeout(() => whatsappBtn.style.transform = '', 200);
-        }
-
-        // Open booking modal
-        setTimeout(() => {
-          openBookingModal();
-        }, 1000);
-
-        // Reset button
-        setTimeout(() => {
-          launchBtn.textContent = originalText;
-          launchBtn.style.opacity = '1';
-        }, 500);
-      }, 600);
-    }
 
     function openBookingModal() {
       bookingState = {
