@@ -454,6 +454,132 @@
     }
     .footer-bottom a { color: var(--gold); text-decoration: none; }
 
+    /* ── BOOKING MODAL ── */
+    .booking-modal {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+      z-index: 200; justify-content: center; align-items: center;
+      padding: 1rem;
+    }
+    .booking-modal.active { display: flex; }
+    .booking-modal-content {
+      background: white; border-radius: 24px; max-width: 600px;
+      width: 100%; max-height: 90vh; overflow-y: auto;
+      padding: 2.5rem; position: relative;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.3);
+      animation: slideUp 0.4s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .booking-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--mid); transition: color 0.3s;
+    }
+    .booking-close:hover { color: var(--crimson); }
+    .booking-modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: var(--dark);
+      margin-bottom: 1.5rem; margin-top: 0;
+    }
+    .booking-step {
+      margin-bottom: 2rem;
+    }
+    .booking-label {
+      font-size: 0.85rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--crimson); margin-bottom: 0.8rem;
+      display: block;
+    }
+    .booking-calendar {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem; margin-bottom: 2rem;
+    }
+    .calendar-header {
+      grid-column: 1 / -1; display: flex;
+      justify-content: space-between; align-items: center;
+      margin-bottom: 1rem;
+    }
+    .calendar-header button {
+      background: var(--crimson); color: white;
+      border: none; padding: 0.5rem 1rem; border-radius: 8px;
+      cursor: pointer; transition: background 0.3s;
+    }
+    .calendar-header button:hover { background: var(--warm-red); }
+    .calendar-header h4 { font-family: 'Playfair Display', serif; margin: 0; }
+    .weekday { text-align: center; font-weight: 600; color: var(--crimson); font-size: 0.75rem; }
+    .calendar-day {
+      aspect-ratio: 1; border: 2px solid #E8D5C4;
+      border-radius: 10px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 500; transition: all 0.3s;
+    }
+    .calendar-day:hover:not(.disabled) { border-color: var(--crimson); background: var(--light-red); }
+    .calendar-day.selected {
+      background: var(--crimson); color: white; border-color: var(--crimson);
+    }
+    .calendar-day.disabled {
+      opacity: 0.3; cursor: not-allowed; background: #F5F5F5;
+    }
+    .time-slots {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.75rem; margin-bottom: 2rem;
+    }
+    .time-slot {
+      padding: 0.75rem; border: 2px solid #E8D5C4;
+      border-radius: 10px; text-align: center; font-size: 0.9rem;
+      font-weight: 500; cursor: pointer; transition: all 0.3s;
+    }
+    .time-slot:hover:not(.booked):not(.disabled) {
+      border-color: var(--crimson); background: var(--light-red);
+    }
+    .time-slot.selected {
+      background: var(--crimson); color: white; border-color: var(--crimson);
+    }
+    .time-slot.booked {
+      background: #F0F0F0; color: #999; cursor: not-allowed;
+      border-color: #DDD;
+    }
+    .time-slot.disabled {
+      opacity: 0.4; cursor: not-allowed;
+    }
+    .time-slot.paid-only::after {
+      content: ' 👑'; font-size: 0.8rem;
+    }
+    .booking-info {
+      background: var(--light-red); border-radius: 12px;
+      padding: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem;
+      color: var(--mid);
+    }
+    .booking-info strong { color: var(--dark); }
+    .booking-summary {
+      background: var(--cream); border-left: 4px solid var(--gold);
+      padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;
+    }
+    .booking-summary h4 {
+      margin: 0 0 0.8rem; color: var(--dark); font-size: 1rem;
+    }
+    .booking-summary p { margin: 0.3rem 0; color: var(--mid); font-size: 0.9rem; }
+    .booking-summary strong { color: var(--dark); }
+    .booking-actions {
+      display: flex; gap: 1rem; margin-top: 1.5rem;
+    }
+    .booking-btn {
+      flex: 1; padding: 0.9rem; border: none;
+      border-radius: 50px; font-weight: 600; cursor: pointer;
+      transition: all 0.3s; font-size: 0.95rem;
+    }
+    .booking-btn.primary {
+      background: var(--crimson); color: white;
+    }
+    .booking-btn.primary:hover { background: var(--warm-red); }
+    .booking-btn.secondary {
+      background: transparent; border: 2px solid var(--mid); color: var(--mid);
+    }
+    .booking-btn.secondary:hover { border-color: var(--crimson); color: var(--crimson); }
+
     /* ── FLOATING CTA ── */
     .floating-btns {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 99;
@@ -517,7 +643,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#process">How It Works</a></li>
       <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#contact" class="nav-cta">Book a Session</a></li>
+      <li><a href="#" class="nav-cta" onclick="openBookingModal(); return false;">Book a Session</a></li>
     </ul>
   </nav>
 
@@ -528,7 +654,7 @@
       <h1>Your Journey to<br /><em>Healing &amp; Hope</em><br />Starts Here</h1>
       <p class="hero-sub">Compassionate, professional counselling for individuals, families, students, and children. Specializing in addiction recovery, life stabilization, and emotional wellbeing — in a safe, judgment-free space.</p>
       <div class="hero-btns">
-        <a href="#contact" class="btn-primary">Book a Free Consultation</a>
+        <a href="#" class="btn-primary" onclick="openBookingModal(); return false;">Book a Free Consultation</a>
         <a href="#services" class="btn-secondary">Explore Services</a>
       </div>
     </div>
@@ -659,13 +785,13 @@
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>Free Consultation</h3>
-        <p>Enjoy a complimentary 20-minute consultation where we learn about your needs and determine the best path forward together.</p>
+        <h3>Book a Time</h3>
+        <p>Select your preferred date and time from our available slots. Our smart system ensures you get a time that works for you.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Personalized Plan</h3>
-        <p>We create a tailored counselling plan that respects your pace, your goals, and your unique circumstances.</p>
+        <h3>Free Consultation</h3>
+        <p>Enjoy a complimentary 20-minute consultation where we learn about your needs and determine the best path forward together.</p>
       </div>
       <div class="step">
         <div class="step-num">04</div>
@@ -801,6 +927,83 @@
     </div>
   </section>
 
+  <!-- BOOKING MODAL -->
+  <div class="booking-modal" id="bookingModal">
+    <div class="booking-modal-content">
+      <button class="booking-close" aria-label="Close booking modal">&times;</button>
+      
+      <h2>✦ Book Your Session</h2>
+      
+      <!-- Step 1: Service Type -->
+      <div class="booking-step" id="serviceStep">
+        <label class="booking-label">Select Service Type</label>
+        <select id="bookingService" style="width: 100%; padding: 0.75rem; border: 2px solid #E8D5C4; border-radius: 10px; font-family: 'DM Sans', sans-serif; cursor: pointer;">
+          <option value="">Choose a service...</option>
+          <option value="family">Family Counselling (60 min)</option>
+          <option value="individual">Individual Therapy (50 min)</option>
+          <option value="student">Student Support (50 min)</option>
+          <option value="child">Child & Youth Therapy (40 min)</option>
+          <option value="addiction">Addiction Recovery (60 min)</option>
+          <option value="coaching">Life Stabilization & Coaching (50 min)</option>
+        </select>
+      </div>
+
+      <!-- Step 2: Customer Type -->
+      <div class="booking-step" id="customerStep" style="display: none;">
+        <label class="booking-label">Customer Status</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <button class="time-slot" style="border: 2px solid #E8D5C4; background: white; cursor: pointer; padding: 1rem;" onclick="setCustomerType('general')">
+            New Customer
+          </button>
+          <button class="time-slot" style="border: 2px solid #E8D5C4; background: white; cursor: pointer; padding: 1rem;" onclick="setCustomerType('paid')">
+            Existing Client 👑
+          </button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--mid); margin-top: 1rem;">👑 Existing paid clients get priority booking 48h in advance</p>
+      </div>
+
+      <!-- Step 3: Select Date -->
+      <div class="booking-step" id="dateStep" style="display: none;">
+        <label class="booking-label">Select Date</label>
+        <div class="booking-calendar" id="calendar"></div>
+      </div>
+
+      <!-- Step 4: Select Time -->
+      <div class="booking-step" id="timeStep" style="display: none;">
+        <label class="booking-label">Select Time</label>
+        <div class="booking-info">
+          <strong>Session Duration:</strong> <span id="sessionDuration">50 minutes</span><br>
+          <strong>Time Zone:</strong> Your Local Time
+        </div>
+        <div class="time-slots" id="timeSlots"></div>
+      </div>
+
+      <!-- Step 5: Confirmation -->
+      <div class="booking-step" id="confirmStep" style="display: none;">
+        <h3 style="color: var(--dark); margin-bottom: 1rem;">Confirm Your Booking</h3>
+        <div class="booking-summary">
+          <h4>Booking Details</h4>
+          <p><strong>Service:</strong> <span id="summaryService"></span></p>
+          <p><strong>Date:</strong> <span id="summaryDate"></span></p>
+          <p><strong>Time:</strong> <span id="summaryTime"></span></p>
+          <p><strong>Duration:</strong> <span id="summaryDuration"></span></p>
+          <p><strong>Session Type:</strong> <span id="summaryType"></span></p>
+        </div>
+
+        <div style="background: var(--cream); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
+          <p style="margin: 0; color: var(--mid); font-size: 0.9rem;"><strong>Note:</strong> A confirmation email and WhatsApp message will be sent to you with session details.</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="booking-actions">
+        <button class="booking-btn secondary" onclick="previousBookingStep()" id="prevBtn" style="display: none;">← Back</button>
+        <button class="booking-btn primary" onclick="nextBookingStep()" id="nextBtn">Continue →</button>
+        <button class="booking-btn secondary" onclick="closeBookingModal()" id="closeBookingBtn" style="display: none;">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer aria-label="Site footer">
     <div class="footer-grid">
@@ -840,7 +1043,7 @@
     <a href="https://wa.me/0659745590?text=Hello%20Thamar%20Counselling%2C%20I%20would%20like%20to%20book%20a%20session." target="_blank" class="floating-btn whatsapp" aria-label="Message on WhatsApp">
       ✓ WhatsApp
     </a>
-    <a href="#contact" class="floating-btn" aria-label="Book a counselling session">
+    <a href="#" class="floating-btn" aria-label="Book a counselling session" onclick="openBookingModal(); return false;">
       ✦ Book
     </a>
   </div>
@@ -931,6 +1134,342 @@
           btn.disabled = false;
         }, 2000);
       }
+    });
+
+    // ─────────────────────────────────────
+    // BOOKING SYSTEM
+    // ─────────────────────────────────────
+
+    let bookingState = {
+      step: 1,
+      service: '',
+      customerType: 'general',
+      date: null,
+      time: null,
+      duration: 50
+    };
+
+    const serviceInfo = {
+      family: { name: 'Family Counselling', duration: 60 },
+      individual: { name: 'Individual Therapy', duration: 50 },
+      student: { name: 'Student Support', duration: 50 },
+      child: { name: 'Child & Youth Therapy', duration: 40 },
+      addiction: { name: 'Addiction Recovery', duration: 60 },
+      coaching: { name: 'Life Stabilization & Coaching', duration: 50 }
+    };
+
+    // Simulated booked slots (in production, fetch from server)
+    const bookedSlots = {
+      '2026-02-18': ['09:00', '14:00', '15:00'],
+      '2026-02-19': ['10:00', '11:00', '16:00'],
+      '2026-02-20': ['09:30', '14:30'],
+    };
+
+    // Paid customer reserved slots (early access)
+    const paidReservedSlots = {
+      '2026-02-18': ['08:00', '17:00'],
+      '2026-02-19': ['08:00', '08:30'],
+    };
+
+    function openBookingModal() {
+      bookingState = {
+        step: 1,
+        service: '',
+        customerType: 'general',
+        date: null,
+        time: null,
+        duration: 50
+      };
+      document.getElementById('bookingModal').classList.add('active');
+      updateBookingUI();
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.remove('active');
+      bookingState.step = 1;
+      updateBookingUI();
+    }
+
+    function updateBookingUI() {
+      const steps = ['serviceStep', 'customerStep', 'dateStep', 'timeStep', 'confirmStep'];
+      steps.forEach((step, idx) => {
+        document.getElementById(step).style.display = idx + 1 === bookingState.step ? 'block' : 'none';
+      });
+
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const closeBtn = document.getElementById('closeBookingBtn');
+
+      prevBtn.style.display = bookingState.step > 1 ? 'block' : 'none';
+      closeBtn.style.display = bookingState.step === 5 ? 'block' : 'none';
+      nextBtn.style.display = bookingState.step < 5 ? 'block' : 'none';
+
+      // Update button text
+      if (bookingState.step === 4) {
+        nextBtn.textContent = 'Confirm Booking →';
+      } else if (bookingState.step === 5) {
+        nextBtn.style.display = 'none';
+      } else {
+        nextBtn.textContent = 'Continue →';
+      }
+
+      if (bookingState.step === 1) {
+        initServiceStep();
+      } else if (bookingState.step === 3) {
+        initDateStep();
+      } else if (bookingState.step === 4) {
+        initTimeStep();
+      } else if (bookingState.step === 5) {
+        initConfirmStep();
+      }
+    }
+
+    function initServiceStep() {
+      document.getElementById('bookingService').addEventListener('change', e => {
+        bookingState.service = e.target.value;
+      });
+    }
+
+    function setCustomerType(type) {
+      bookingState.customerType = type;
+      document.querySelectorAll('#customerStep .time-slot').forEach(btn => {
+        btn.style.background = 'white';
+        btn.style.borderColor = '#E8D5C4';
+      });
+      event.target.style.background = 'var(--light-red)';
+      event.target.style.borderColor = 'var(--crimson)';
+    }
+
+    function initDateStep() {
+      const calendar = document.getElementById('calendar');
+      calendar.innerHTML = '';
+      
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      const currentYear = today.getFullYear();
+
+      // Month header
+      const header = document.createElement('div');
+      header.className = 'calendar-header';
+      header.innerHTML = `
+        <button onclick="previousMonth()">← Prev</button>
+        <h4 id="monthYear">${new Date(currentYear, currentMonth).toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}</h4>
+        <button onclick="nextMonth()">Next →</button>
+      `;
+      calendar.appendChild(header);
+
+      // Weekday headers
+      const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      weekdays.forEach(day => {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'weekday';
+        dayEl.textContent = day;
+        calendar.appendChild(dayEl);
+      });
+
+      // Days
+      const firstDay = new Date(currentYear, currentMonth, 1);
+      const lastDay = new Date(currentYear, currentMonth + 1, 0);
+      const startDate = new Date(firstDay);
+      startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(startDate);
+        date.setDate(date.getDate() + i);
+        
+        const dayEl = document.createElement('div');
+        dayEl.className = 'calendar-day';
+        dayEl.textContent = date.getDate();
+
+        const isCurrentMonth = date.getMonth() === currentMonth;
+        const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const isMonday = date.getDay() === 1 || date.getDay() === 2 || date.getDay() === 3 || date.getDay() === 4 || date.getDay() === 5 || date.getDay() === 6;
+
+        if (!isCurrentMonth || isPast || !isMonday) {
+          dayEl.classList.add('disabled');
+        } else {
+          dayEl.onclick = () => selectDate(date);
+        }
+
+        calendar.appendChild(dayEl);
+      }
+    }
+
+    function selectDate(date) {
+      bookingState.date = date;
+      document.querySelectorAll('.calendar-day').forEach(el => el.classList.remove('selected'));
+      event.target.classList.add('selected');
+    }
+
+    function initTimeStep() {
+      const timeSlots = document.getElementById('timeSlots');
+      timeSlots.innerHTML = '';
+
+      if (!bookingState.date) return;
+
+      const dateStr = bookingState.date.toISOString().split('T')[0];
+      const slots = generateAvailableSlots(dateStr);
+
+      slots.forEach(slot => {
+        const slotEl = document.createElement('button');
+        slotEl.className = 'time-slot';
+        slotEl.textContent = slot.time;
+        slotEl.type = 'button';
+
+        if (slot.booked) {
+          slotEl.classList.add('booked');
+        } else if (slot.paidOnly && bookingState.customerType === 'general') {
+          slotEl.classList.add('disabled');
+          slotEl.classList.add('paid-only');
+          slotEl.title = 'Reserved for existing clients';
+        } else {
+          slotEl.onclick = () => selectTime(slot.time, slotEl);
+        }
+
+        timeSlots.appendChild(slotEl);
+      });
+
+      document.getElementById('sessionDuration').textContent = bookingState.duration + ' minutes';
+    }
+
+    function generateAvailableSlots(dateStr) {
+      const slots = [];
+      const booked = bookedSlots[dateStr] || [];
+      const paidOnly = (bookingState.customerType === 'general') ? (paidReservedSlots[dateStr] || []) : [];
+
+      // Opening hours: 8 AM - 6 PM (excluding lunch 12-1 PM)
+      for (let hour = 8; hour < 18; hour++) {
+        for (let min = 0; min < 60; min += 30) {
+          if (hour === 12 && min === 0) continue; // Skip lunch
+          if (hour === 12 && min === 30) {
+            hour = 13;
+            continue;
+          }
+
+          const timeStr = `${String(hour).padStart(2, '0')}:${String(min).padStart(2, '0')}`;
+          const isBooked = booked.includes(timeStr);
+          const isPaidOnly = paidOnly.includes(timeStr);
+
+          slots.push({
+            time: timeStr,
+            booked: isBooked,
+            paidOnly: isPaidOnly
+          });
+        }
+      }
+
+      return slots;
+    }
+
+    function selectTime(time, element) {
+      bookingState.time = time;
+      document.querySelectorAll('#timeSlots .time-slot').forEach(el => el.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    function initConfirmStep() {
+      const service = serviceInfo[bookingState.service];
+      document.getElementById('summaryService').textContent = service.name;
+      document.getElementById('summaryDate').textContent = bookingState.date.toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+      document.getElementById('summaryTime').textContent = bookingState.time;
+      document.getElementById('summaryDuration').textContent = service.duration + ' minutes';
+      document.getElementById('summaryType').textContent = bookingState.customerType === 'paid' ? 'Existing Client' : 'New Customer';
+    }
+
+    function nextBookingStep() {
+      // Validation
+      if (bookingState.step === 1 && !bookingState.service) {
+        alert('Please select a service');
+        return;
+      }
+      if (bookingState.step === 2 && !bookingState.customerType) {
+        alert('Please select customer type');
+        return;
+      }
+      if (bookingState.step === 3 && !bookingState.date) {
+        alert('Please select a date');
+        return;
+      }
+      if (bookingState.step === 4 && !bookingState.time) {
+        alert('Please select a time');
+        return;
+      }
+
+      if (bookingState.step === 1) {
+        bookingState.duration = serviceInfo[bookingState.service].duration;
+      }
+
+      if (bookingState.step === 5) {
+        confirmBooking();
+        return;
+      }
+
+      bookingState.step++;
+      updateBookingUI();
+    }
+
+    function previousBookingStep() {
+      if (bookingState.step > 1) {
+        bookingState.step--;
+        updateBookingUI();
+      }
+    }
+
+    function confirmBooking() {
+      const service = serviceInfo[bookingState.service];
+      const bookingDetails = {
+        service: service.name,
+        date: bookingState.date.toISOString().split('T')[0],
+        time: bookingState.time,
+        duration: service.duration,
+        customerType: bookingState.customerType,
+        timestamp: new Date().toISOString()
+      };
+
+      console.log('Booking confirmed:', bookingDetails);
+      alert('✓ Booking confirmed! A confirmation email and WhatsApp message will be sent shortly.');
+      
+      // In production, send to server here
+      // await fetch('/api/bookings', {method: 'POST', body: JSON.stringify(bookingDetails)})
+
+      closeBookingModal();
+    }
+
+    function previousMonth() {
+      const monthYear = document.getElementById('monthYear');
+      const currentText = monthYear.textContent;
+      // Simplified - in production use proper date handling
+      alert('Month navigation coming soon');
+    }
+
+    function nextMonth() {
+      const monthYear = document.getElementById('monthYear');
+      const currentText = monthYear.textContent;
+      // Simplified - in production use proper date handling
+      alert('Month navigation coming soon');
+    }
+
+    // Modal controls
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('bookingModal');
+      const closeBtn = document.querySelector('.booking-close');
+
+      closeBtn.addEventListener('click', closeBookingModal);
+
+      // Close on outside click
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeBookingModal();
+      });
+
+      // Open booking from CTA buttons
+      document.querySelectorAll('a[href="#contact"]').forEach(link => {
+        link.addEventListener('click', e => {
+          if (link.textContent.includes('Book') || link.textContent.includes('Consultation')) {
+            e.preventDefault();
+            openBookingModal();
+          }
+        });
+      });
     });
   </script>
 </body>
